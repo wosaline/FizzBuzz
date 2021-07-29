@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	res, err := entity.FizzBuzz(6, 7, 10, "fizz", "buzz")
+	res, err := entity.FizzBuzz(30, 3, 5, "", "")
 	fmt.Println(res)
 	fmt.Println(err)
 }
