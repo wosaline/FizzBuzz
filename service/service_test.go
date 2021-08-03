@@ -83,6 +83,6 @@ func TestShouldReturnStatusBadRequest_WrongDataType(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, GetFizzBuzz(c)) {
 		assert.Equal(t, http.StatusBadRequest, rec.Code)
-		assert.Equal(t, "{\"error\":\"Please specify the data type as String\"}\n", rec.Body.String())
+		assert.Equal(t, "{\"error\":\"please specify the data type as string\"}\n", rec.Body.String())
 	}
 }
