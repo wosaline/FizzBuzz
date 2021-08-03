@@ -1,6 +1,6 @@
 //three integers int1, int2 and limit, and two strings str1and str2
 
-package entity
+package service
 
 import "testing"
 

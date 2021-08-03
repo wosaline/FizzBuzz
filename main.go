@@ -1,7 +1,7 @@
 package main
 
 import (
-	"FizzBuzz/service"
+	"FizzBuzz/controller"
 
 	"github.com/labstack/echo"
 )
@@ -16,7 +16,7 @@ func main() {
 
 	e := echo.New()
 	//QueryParam along with PathVariable Get API
-	e.GET("/fizzbuzz/:data", service.GetFizzBuzz)
+	e.GET("/fizzbuzz/:data", controller.GetFizzBuzz)
 	//starts server en port 8000
 	e.Logger.Fatal(e.Start(":8000"))
 }
