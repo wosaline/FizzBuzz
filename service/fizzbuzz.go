@@ -1,21 +1,19 @@
 //three integers int1, int2 and limit, and two strings str1and str2
 
-package entity
+package service
 
 import (
 	"fmt"
 )
 
 //FizzBuzzStructure contains all the parameters for FizzBuzz function
-/*
 type FizzBuzzStructure struct {
-	limit     int    `json:"limit"`
-	multiple1 int    `json:"multiple1"`
-	multiple2 int    `json:"multiple2"`
-	str1      string `json:"str1"`
-	str2      string `json:"str2"`
+	Limit     int    `json:"limit"`
+	Multiple1 int    `json:"multiple1"`
+	Multiple2 int    `json:"multiple2"`
+	Str1      string `json:"str1"`
+	Str2      string `json:"str2"`
 }
-*/
 
 //FizzBuzz replaces :
 //- all multiples of multiple1 with str1
