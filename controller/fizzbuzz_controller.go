@@ -48,9 +48,13 @@ func GetFizzBuzz(c echo.Context) error {
 	if errLimit != nil || errMultiple1 != nil || errMultiple2 != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "params multiple1, multiple2 and limit must be int"})
 	}
-	if dataType == "string" {
-		return c.String(http.StatusOK, fmt.Sprintf("fizzbuzz:replace multiples of %d and %d by %s and %s, starting from 1 to %d", multiple1, multiple2, str1, str2, limit))
-	} else {
+	if dataType != "string" {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "please specify the data type as string"})
 	}
+
+	result, errFizzBuzz := service.FizzBuzz(limit, multiple1, multiple2, str1, str2)
+	if errFizzBuzz != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": errFizzBuzz.Error()})
+	}
+	return c.String(http.StatusOK, fmt.Sprint(result))
 }

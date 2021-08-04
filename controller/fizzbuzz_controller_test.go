@@ -32,7 +32,7 @@ func TestShouldReturnStatusOK(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, GetFizzBuzz(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
-		assert.Equal(t, "fizzbuzz:replace multiples of 3 and 5 by s1 and s2, starting from 1 to 20", rec.Body.String())
+		assert.Equal(t, "1,2,s1,4,s2,s1,7,8,s1,s2,11,s1,13,14,s1s2,16,17,s1,19,s2", rec.Body.String())
 	}
 }
 
@@ -100,7 +100,7 @@ func TestShouldReturnStatusBadRequest_IncorrectParameter(t *testing.T) {
 	c.SetPath("/fizzbuzz/:data")
 	//set data type
 	c.SetParamNames("data")
-	c.SetParamValues("json")
+	c.SetParamValues("string")
 	//set URL query
 	q := req.URL.Query()
 	q.Add("incorrectParam", "1")
@@ -127,7 +127,7 @@ func TestShouldReturnStatusBadRequest_IncorrectNumberOfParameters(t *testing.T) 
 	c.SetPath("/fizzbuzz/:data")
 	//set data type
 	c.SetParamNames("data")
-	c.SetParamValues("json")
+	c.SetParamValues("string")
 	//set URL query
 	q := req.URL.Query()
 	q.Add("multiple2", "2")
@@ -156,7 +156,7 @@ func TestShouldReturnStatusBadRequest_IntInferiorToOne(t *testing.T) {
 	c.SetParamValues("string")
 	//set URL query
 	q := req.URL.Query()
-	q.Add("multiple1", "1")
+	q.Add("multiple1", "-1")
 	q.Add("multiple2", "2")
 	q.Add("limit", "50")
 	q.Add("str1", "s1")
@@ -166,6 +166,6 @@ func TestShouldReturnStatusBadRequest_IntInferiorToOne(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, GetFizzBuzz(c)) {
 		assert.Equal(t, http.StatusBadRequest, rec.Code)
-		assert.Equal(t, "{\"error\":\"limit and multiples can't be inferior to 1 : limit = 50, multiple1 = 1, multiple2 = 2\"}\n", rec.Body.String())
+		assert.Equal(t, "{\"error\":\"limit and multiples can't be inferior to 1 : limit = 50, multiple1 = -1, multiple2 = 2\"}\n", rec.Body.String())
 	}
 }
