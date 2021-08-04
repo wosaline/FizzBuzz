@@ -13,6 +13,8 @@ import (
 func GetFizzBuzz(c echo.Context) error {
 	limit, errLimit := strconv.Atoi(c.QueryParam("limit"))
 	multiple1, errMultiple1 := strconv.Atoi(c.QueryParam("multiple1"))
+	println(errMultiple1.Error())
+	println(multiple1)
 	multiple2, errMultiple2 := strconv.Atoi(c.QueryParam("multiple2"))
 	str1 := c.QueryParam("str1")
 	str2 := c.QueryParam("str2")
