@@ -113,6 +113,32 @@ func TestShouldReturnStatusBadRequest_IncorrectParameter(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, GetFizzBuzz(c)) {
 		assert.Equal(t, http.StatusBadRequest, rec.Code)
-		assert.Equal(t, "{\"error\":\"parameters must be multiple1, multiple2, limit, str1 and str2\"}\n", rec.Body.String())
+		assert.Equal(t, "{\"error\":\"parameters expected are : [limit multiple1 multiple2 str1 str2]\"}\n", rec.Body.String())
+	}
+}
+
+//Test for FizzBuzz-2
+func TestShouldReturnStatusBadRequest_IncorrectNumberOfParameters(t *testing.T) {
+	// Setup
+	e := echo.New()
+	req := httptest.NewRequest(http.MethodGet, "/", nil)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetPath("/fizzbuzz/:data")
+	//set data type
+	c.SetParamNames("data")
+	c.SetParamValues("json")
+	//set URL query
+	q := req.URL.Query()
+	q.Add("multiple2", "2")
+	q.Add("limit", "50")
+	q.Add("str1", "s1")
+	q.Add("str2", "s2")
+	req.URL.RawQuery = q.Encode()
+
+	// Assertions
+	if assert.NoError(t, GetFizzBuzz(c)) {
+		assert.Equal(t, http.StatusBadRequest, rec.Code)
+		assert.Equal(t, "{\"error\":\"5 parameters expected : [limit multiple1 multiple2 str1 str2]\"}\n", rec.Body.String())
 	}
 }

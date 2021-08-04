@@ -15,6 +15,10 @@ type FizzBuzzStructure struct {
 	Str2      string `json:"str2"`
 }
 
+const NbFizzBuzzParameters int = 5
+
+var listOfParameters = [NbFizzBuzzParameters]string{"limit", "multiple1", "multiple2", "str1", "str2"}
+
 //FizzBuzz replaces :
 //- all multiples of multiple1 with str1
 //- all multiples of multiple2 with str2
@@ -51,4 +55,8 @@ func FizzBuzz(limit, multiple1, multiple2 int, str1, str2 string) (string, error
 	}
 
 	return arrFizzBuzz, nil
+}
+
+func GetListOfParameters() [NbFizzBuzzParameters]string {
+	return listOfParameters
 }
