@@ -59,7 +59,7 @@ func TestShouldReturnStatusBadRequest_NotInt(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, GetFizzBuzz(c)) {
 		assert.Equal(t, http.StatusBadRequest, rec.Code)
-		assert.Equal(t, "{\"error\":\"params multiple1, multiple2 and limit must be int\"}\n", rec.Body.String())
+		assert.Equal(t, "{\"error\":\"params multiple1, multiple2 and limit must be int : you entered limit = cc, multiple1 = aa, multiple2 = bb\"}\n", rec.Body.String())
 	}
 }
 
@@ -86,7 +86,7 @@ func TestShouldReturnStatusBadRequest_WrongDataType(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, GetFizzBuzz(c)) {
 		assert.Equal(t, http.StatusBadRequest, rec.Code)
-		assert.Equal(t, "{\"error\":\"please specify the data type as string\"}\n", rec.Body.String())
+		assert.Equal(t, "{\"error\":\"please specify the data type as string : you entered json\"}\n", rec.Body.String())
 	}
 }
 
