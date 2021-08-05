@@ -4,17 +4,17 @@ import (
 	"FizzBuzz/service"
 	"fmt"
 	"net/http"
-	"net/url"
 	"strconv"
 
 	"github.com/labstack/echo"
 )
 
-func bValidParameters(params url.Values) (bool, error) {
+func parseValidParameters(c echo.Context) (int, int, int, string, string, error) {
 	listOfParameters := service.GetListOfParameters()
+	params := c.QueryParams()
 
 	if len(params) != service.NbFizzBuzzParameters {
-		return false, fmt.Errorf("%d parameters expected : %v", service.NbFizzBuzzParameters, listOfParameters)
+		return 0, 0, 0, "", "", fmt.Errorf("%d parameters expected : %v", service.NbFizzBuzzParameters, listOfParameters)
 	}
 	isPresent := true
 
@@ -23,19 +23,8 @@ func bValidParameters(params url.Values) (bool, error) {
 		isPresent = isPresent && found
 	}
 
-	if isPresent {
-		return true, nil
-	} else {
-		return false, fmt.Errorf("parameters expected are : %v", listOfParameters)
-	}
-}
-
-//GET API which return the name of the cats specified in QueryParam
-//http://localhost:8000/fizzbuzz/json?multiple1=3&multiple2=5&limit=20&str1=fizz&str2=buzz
-func GetFizzBuzz(c echo.Context) error {
-	isValid, errInvalidParameter := bValidParameters(c.QueryParams())
-	if !isValid {
-		return c.JSON(http.StatusBadRequest, map[string]string{"error": errInvalidParameter.Error()})
+	if !isPresent {
+		return 0, 0, 0, "", "", fmt.Errorf("parameters expected are : %v", listOfParameters)
 	}
 
 	limit, errLimit := strconv.Atoi(c.QueryParam("limit"))
@@ -46,10 +35,21 @@ func GetFizzBuzz(c echo.Context) error {
 	dataType := c.Param("data")
 
 	if errLimit != nil || errMultiple1 != nil || errMultiple2 != nil {
-		return c.JSON(http.StatusBadRequest, map[string]string{"error": "params multiple1, multiple2 and limit must be int"})
+		return limit, multiple1, multiple2, str1, str2, fmt.Errorf("params multiple1, multiple2 and limit must be int : you entered limit = %s, multiple1 = %s, multiple2 = %s", c.QueryParam("limit"), c.QueryParam("multiple1"), c.QueryParam("multiple2"))
 	}
 	if dataType != "string" {
-		return c.JSON(http.StatusBadRequest, map[string]string{"error": "please specify the data type as string"})
+		return limit, multiple1, multiple2, str1, str2, fmt.Errorf("please specify the data type as string : you entered %s", dataType)
+	}
+
+	return limit, multiple1, multiple2, str1, str2, nil
+}
+
+//GET API which return the name of the cats specified in QueryParam
+//http://localhost:8000/fizzbuzz/json?multiple1=3&multiple2=5&limit=20&str1=fizz&str2=buzz
+func GetFizzBuzz(c echo.Context) error {
+	limit, multiple1, multiple2, str1, str2, errInvalidParameter := parseValidParameters(c)
+	if errInvalidParameter != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": errInvalidParameter.Error()})
 	}
 
 	result, errFizzBuzz := service.FizzBuzz(limit, multiple1, multiple2, str1, str2)
