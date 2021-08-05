@@ -44,7 +44,7 @@ func parseValidParameters(c echo.Context) (int, int, int, string, string, error)
 	return limit, multiple1, multiple2, str1, str2, nil
 }
 
-//GET API which return the name of the cats specified in QueryParam
+//GET API which returns the result of fizzbuzz for the params specified in the query
 //http://localhost:8000/fizzbuzz/json?multiple1=3&multiple2=5&limit=20&str1=fizz&str2=buzz
 func GetFizzBuzz(c echo.Context) error {
 	limit, multiple1, multiple2, str1, str2, errInvalidParameter := parseValidParameters(c)
@@ -57,4 +57,11 @@ func GetFizzBuzz(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": errFizzBuzz.Error()})
 	}
 	return c.String(http.StatusOK, fmt.Sprint(result))
+}
+
+//GET API which returns the parameters corresponding to the most used request
+//as well as the number of hits for this request
+//http://localhost:8000/statistics
+func GetStatisticsFizzBuzz(c echo.Context) error {
+	return c.String(http.StatusOK, "Statistics bonjour !")
 }

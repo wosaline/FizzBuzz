@@ -169,3 +169,19 @@ func TestShouldReturnStatusBadRequest_IntInferiorToOne(t *testing.T) {
 		assert.Equal(t, "{\"error\":\"limit and multiples can't be inferior to 1 : limit = 50, multiple1 = -1, multiple2 = 2\"}\n", rec.Body.String())
 	}
 }
+
+//Test for FizzBuzz-11
+func TestShouldReturnStatusOK_Statistics(t *testing.T) {
+	// Setup
+	e := echo.New()
+	req := httptest.NewRequest(http.MethodGet, "/", nil)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetPath("/statistics")
+
+	// Assertions
+	if assert.NoError(t, GetStatisticsFizzBuzz(c)) {
+		assert.Equal(t, http.StatusOK, rec.Code)
+		assert.Equal(t, "Statistics bonjour !", rec.Body.String())
+	}
+}
