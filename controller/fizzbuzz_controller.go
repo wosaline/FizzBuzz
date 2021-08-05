@@ -9,6 +9,8 @@ import (
 	"github.com/labstack/echo"
 )
 
+var fizzBuzzMaps map[service.FizzBuzzStructure]int = make(map[service.FizzBuzzStructure]int)
+
 func parseValidParameters(c echo.Context) (int, int, int, string, string, error) {
 	listOfParameters := service.GetListOfParameters()
 	params := c.QueryParams()
@@ -56,7 +58,24 @@ func GetFizzBuzz(c echo.Context) error {
 	if errFizzBuzz != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": errFizzBuzz.Error()})
 	}
+
+	calculateStatistics(service.FizzBuzzStructure{
+		Limit:     limit,
+		Multiple1: multiple1,
+		Multiple2: multiple2,
+		Str1:      str1,
+		Str2:      str2,
+	})
+
 	return c.String(http.StatusOK, fmt.Sprint(result))
+}
+
+func calculateStatistics(FBStruct service.FizzBuzzStructure) {
+	fizzBuzzMaps[FBStruct]++
+}
+
+func GetFizzBuzzMapsCount(FBStruct service.FizzBuzzStructure) int {
+	return fizzBuzzMaps[FBStruct]
 }
 
 //GET API which returns the parameters corresponding to the most used request

@@ -1,5 +1,4 @@
-//three integers int1, int2 and limit, and two strings str1and str2
-
+//three integers int1, int2 and limit, and two strings str1 and str2
 package service
 
 import (
