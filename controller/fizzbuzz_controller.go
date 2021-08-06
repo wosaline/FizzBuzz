@@ -74,13 +74,35 @@ func calculateStatistics(FBStruct service.FizzBuzzStructure) {
 	fizzBuzzMaps[FBStruct]++
 }
 
-func GetFizzBuzzMapsCount(FBStruct service.FizzBuzzStructure) int {
+//used for tests
+func getFizzBuzzMapsCount(FBStruct service.FizzBuzzStructure) int {
 	return fizzBuzzMaps[FBStruct]
+}
+
+//Return the parameters corresponding to the most used request, as well as the number of hits for this request
+func getMostUsedRequest() (service.FizzBuzzStructure, int) {
+	if len(fizzBuzzMaps) < 1 {
+		return service.FizzBuzzStructure{}, -1
+	}
+	max := 0
+	var fbMostUsed service.FizzBuzzStructure
+	for fb, fbCount := range fizzBuzzMaps {
+		if fbCount > max {
+			max = fbCount
+			fbMostUsed = fb
+		}
+	}
+	return fbMostUsed, max
 }
 
 //GET API which returns the parameters corresponding to the most used request
 //as well as the number of hits for this request
 //http://localhost:8000/statistics
 func GetStatisticsFizzBuzz(c echo.Context) error {
-	return c.String(http.StatusOK, "Statistics bonjour !")
+	fbMostUsed, count := getMostUsedRequest()
+	if count == -1 {
+		return c.String(http.StatusOK, "No request has been made yet")
+	}
+	return c.String(http.StatusOK, fmt.Sprintf("Most used request is : limit=%d, multiple1=%d, multiple2=%d, str1=%s, str2=%s\nThe request was asked %d times",
+		fbMostUsed.Limit, fbMostUsed.Multiple1, fbMostUsed.Multiple2, fbMostUsed.Str1, fbMostUsed.Str2, count))
 }
