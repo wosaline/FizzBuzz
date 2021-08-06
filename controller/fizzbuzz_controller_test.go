@@ -35,6 +35,7 @@ func TestShouldReturnStatusOK(t *testing.T) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 		assert.Equal(t, "1,2,s1,4,s2,s1,7,8,s1,s2,11,s1,13,14,s1s2,16,17,s1,19,s2", rec.Body.String())
 	}
+	fizzBuzzMaps = make(map[service.FizzBuzzStructure]int)
 }
 
 //Test for FizzBuzz-2
@@ -225,6 +226,7 @@ func TestShouldBeOK_ReturnCountsForRequestStatistics(t *testing.T) {
 			}
 		})
 	}
+	fizzBuzzMaps = make(map[service.FizzBuzzStructure]int)
 }
 
 //Test for FizzBuzz-15
@@ -271,6 +273,7 @@ func TestShouldBeOK_ReturnMostUsedRequestStatistics(t *testing.T) {
 			}
 		})
 	}
+	fizzBuzzMaps = make(map[service.FizzBuzzStructure]int)
 }
 
 //Test for FizzBuzz-15
@@ -348,4 +351,5 @@ func TestShouldReturnStatusOK_MostUsedRequest(t *testing.T) {
 		assert.Equal(t, "Most used request is : limit=45, multiple1=3, multiple2=11, str1=s1, str2=s2\nThe request was asked 4 times",
 			rec3.Body.String())
 	}
+	fizzBuzzMaps = make(map[service.FizzBuzzStructure]int)
 }
