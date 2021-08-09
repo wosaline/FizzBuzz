@@ -1,6 +1,0 @@
-*.mod
-*.sum
-
-__debug_bin
-
-!.vscode
