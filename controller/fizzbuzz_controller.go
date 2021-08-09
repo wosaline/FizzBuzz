@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"FizzBuzz/log"
 	"FizzBuzz/metric"
 	"FizzBuzz/service"
 	"fmt"
@@ -48,13 +49,16 @@ func parseValidParameters(c echo.Context) (int, int, int, string, string, error)
 //GET API which returns the result of fizzbuzz for the params specified in the query
 //http://localhost:8000/fizzbuzz/json?multiple1=3&multiple2=5&limit=20&str1=fizz&str2=buzz
 func GetFizzBuzz(c echo.Context) error {
+	log.Log("FizzBuzz request ongoing")
 	limit, multiple1, multiple2, str1, str2, errInvalidParameter := parseValidParameters(c)
 	if errInvalidParameter != nil {
+		log.Log(fmt.Sprintf("Error during FizzBuzz request - INVALID REQUEST PARAMETERS : %s", errInvalidParameter.Error()))
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": errInvalidParameter.Error()})
 	}
 
 	result, errFizzBuzz := service.FizzBuzz(limit, multiple1, multiple2, str1, str2)
 	if errFizzBuzz != nil {
+		log.Log(fmt.Sprintf("Error during FizzBuzz request - FIZZBUZZ ERROR : %s", errFizzBuzz.Error()))
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": errFizzBuzz.Error()})
 	}
 
@@ -66,5 +70,6 @@ func GetFizzBuzz(c echo.Context) error {
 		Str2:      str2,
 	})
 
+	log.Log(fmt.Sprintf("OK FizzBuzz request for : limit = %d, multiple1 = %d, multiple2 = %d, str1 = %s, str2 = %s", limit, multiple1, multiple2, str1, str2))
 	return c.String(http.StatusOK, fmt.Sprint(result))
 }

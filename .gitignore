@@ -1,6 +1,7 @@
 *.mod
 *.sum
 *.json
+*.log
 
 __debug_bin
 

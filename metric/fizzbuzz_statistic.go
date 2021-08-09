@@ -1,6 +1,7 @@
 package metric
 
 import (
+	"FizzBuzz/log"
 	"FizzBuzz/service"
 	"fmt"
 	"net/http"
@@ -44,10 +45,15 @@ func ResetFizzBuzzRequests() {
 //as well as the number of hits for this request
 //http://localhost:8000/statistics
 func GetStatisticsFizzBuzz(c echo.Context) error {
+	log.Log("Statistics request ongoing")
 	fbMostUsed, count := getMostUsedRequest()
 	if count == -1 {
+		log.Log("No result for statistics")
 		return c.String(http.StatusOK, "No request has been made yet")
 	}
+
+	log.Log(fmt.Sprintf("OK Statistics request : limit = %d, multiple1 = %d, multiple2 = %d, str1 = %s, str2 = %s, count = %d",
+		fbMostUsed.Limit, fbMostUsed.Multiple1, fbMostUsed.Multiple2, fbMostUsed.Str1, fbMostUsed.Str2, count))
 	return c.String(http.StatusOK, fmt.Sprintf("Most used request is : limit=%d, multiple1=%d, multiple2=%d, str1=%s, str2=%s\nThe request was asked %d times",
 		fbMostUsed.Limit, fbMostUsed.Multiple1, fbMostUsed.Multiple2, fbMostUsed.Str1, fbMostUsed.Str2, count))
 }
