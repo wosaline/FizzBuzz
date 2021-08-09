@@ -1,8 +1,7 @@
 package controller
 
 import (
-	"FizzBuzz/service"
-	"fmt"
+	"FizzBuzz/metric"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -36,6 +35,7 @@ func TestShouldReturnStatusOK(t *testing.T) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 		assert.Equal(t, "1,2,s1,4,s2,s1,7,8,s1,s2,11,s1,13,14,s1s2,16,17,s1,19,s2", rec.Body.String())
 	}
+	metric.ResetFizzBuzzRequests()
 }
 
 //Test for FizzBuzz-2
@@ -169,64 +169,5 @@ func TestShouldReturnStatusBadRequest_IntInferiorToOne(t *testing.T) {
 	if assert.NoError(t, GetFizzBuzz(c)) {
 		assert.Equal(t, http.StatusBadRequest, rec.Code)
 		assert.Equal(t, "{\"error\":\"limit and multiples can't be inferior to 1 : limit = 50, multiple1 = -1, multiple2 = 2\"}\n", rec.Body.String())
-	}
-}
-
-//Test for FizzBuzz-11
-func TestShouldReturnStatusOK_Statistics(t *testing.T) {
-	// Setup
-	e := echo.New()
-	req := httptest.NewRequest(http.MethodGet, "/", nil)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
-	c.SetPath("/statistics")
-
-	// Assertions
-	if assert.NoError(t, GetStatisticsFizzBuzz(c)) {
-		assert.Equal(t, http.StatusOK, rec.Code)
-		assert.Equal(t, "Statistics bonjour !", rec.Body.String())
-	}
-}
-
-//Test for FizzBuzz-12
-func TestShouldBeOK_ReturnCountsForRequestStatistics(t *testing.T) {
-	type args struct {
-		limit     int
-		multiple1 int
-		multiple2 int
-		str1      string
-		str2      string
-	}
-	tests := []struct {
-		name string
-		args args
-		want int
-	}{
-		{"Simple test OK", args{20, 2, 3, "fizz", "buzz"}, 1},
-		{"Simple test OK2", args{20, 2, 3, "fizz", "buzz"}, 2},
-		{"Simple test OK3", args{20, 2, 3, "hoy", "buzz"}, 1},
-		{"Simple test OK4", args{20, 2, 3, "hoy", "buzz"}, 2},
-		{"Simple test OK5", args{20, 2, 3, "fizz", "buzz"}, 3},
-		{"Simple test OK6", args{25, 2, 3, "fizz", "buzz"}, 1},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			FBStruct := service.FizzBuzzStructure{
-				Limit:     tt.args.limit,
-				Multiple1: tt.args.multiple1,
-				Multiple2: tt.args.multiple2,
-				Str1:      tt.args.str1,
-				Str2:      tt.args.str2,
-			}
-			calculateStatistics(FBStruct)
-			count := GetFizzBuzzMapsCount(FBStruct)
-			if count != tt.want {
-				t.Errorf("calculateStatistics() got = %v, want %v", count, tt.want)
-				return
-			} else {
-				fmt.Printf("got %d, wanted %d\n", count, tt.want)
-				return
-			}
-		})
 	}
 }

@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"FizzBuzz/metric"
 	"FizzBuzz/service"
 	"fmt"
 	"net/http"
@@ -8,8 +9,6 @@ import (
 
 	"github.com/labstack/echo"
 )
-
-var fizzBuzzMaps map[service.FizzBuzzStructure]int = make(map[service.FizzBuzzStructure]int)
 
 func parseValidParameters(c echo.Context) (int, int, int, string, string, error) {
 	listOfParameters := service.GetListOfParameters()
@@ -59,7 +58,7 @@ func GetFizzBuzz(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": errFizzBuzz.Error()})
 	}
 
-	calculateStatistics(service.FizzBuzzStructure{
+	metric.IncrementFizzBuzzRequestCount(service.FizzBuzzStructure{
 		Limit:     limit,
 		Multiple1: multiple1,
 		Multiple2: multiple2,
@@ -68,19 +67,4 @@ func GetFizzBuzz(c echo.Context) error {
 	})
 
 	return c.String(http.StatusOK, fmt.Sprint(result))
-}
-
-func calculateStatistics(FBStruct service.FizzBuzzStructure) {
-	fizzBuzzMaps[FBStruct]++
-}
-
-func GetFizzBuzzMapsCount(FBStruct service.FizzBuzzStructure) int {
-	return fizzBuzzMaps[FBStruct]
-}
-
-//GET API which returns the parameters corresponding to the most used request
-//as well as the number of hits for this request
-//http://localhost:8000/statistics
-func GetStatisticsFizzBuzz(c echo.Context) error {
-	return c.String(http.StatusOK, "Statistics bonjour !")
 }

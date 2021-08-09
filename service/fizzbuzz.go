@@ -1,4 +1,3 @@
-//three integers int1, int2 and limit, and two strings str1 and str2
 package service
 
 import (
@@ -7,11 +6,11 @@ import (
 
 //FizzBuzzStructure contains all the parameters for FizzBuzz function
 type FizzBuzzStructure struct {
-	Limit     int    `json:"limit"`
-	Multiple1 int    `json:"multiple1"`
-	Multiple2 int    `json:"multiple2"`
-	Str1      string `json:"str1"`
-	Str2      string `json:"str2"`
+	Limit     int
+	Multiple1 int
+	Multiple2 int
+	Str1      string
+	Str2      string
 }
 
 const NbFizzBuzzParameters int = 5
