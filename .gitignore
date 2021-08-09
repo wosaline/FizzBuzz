@@ -1,0 +1,7 @@
+*.mod
+*.sum
+*.json
+
+__debug_bin
+
+!.vscode
