@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"FizzBuzz/metric"
 	"FizzBuzz/service"
 	"fmt"
 	"net/http"
@@ -8,8 +9,6 @@ import (
 
 	"github.com/labstack/echo"
 )
-
-var fizzBuzzMaps map[service.FizzBuzzStructure]int = make(map[service.FizzBuzzStructure]int)
 
 func parseValidParameters(c echo.Context) (int, int, int, string, string, error) {
 	listOfParameters := service.GetListOfParameters()
@@ -59,7 +58,7 @@ func GetFizzBuzz(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": errFizzBuzz.Error()})
 	}
 
-	calculateStatistics(service.FizzBuzzStructure{
+	metric.IncrementFizzBuzzRequestCount(service.FizzBuzzStructure{
 		Limit:     limit,
 		Multiple1: multiple1,
 		Multiple2: multiple2,
@@ -68,41 +67,4 @@ func GetFizzBuzz(c echo.Context) error {
 	})
 
 	return c.String(http.StatusOK, fmt.Sprint(result))
-}
-
-func calculateStatistics(FBStruct service.FizzBuzzStructure) {
-	fizzBuzzMaps[FBStruct]++
-}
-
-//used for tests
-func getFizzBuzzMapsCount(FBStruct service.FizzBuzzStructure) int {
-	return fizzBuzzMaps[FBStruct]
-}
-
-//Return the parameters corresponding to the most used request, as well as the number of hits for this request
-func getMostUsedRequest() (service.FizzBuzzStructure, int) {
-	if len(fizzBuzzMaps) < 1 {
-		return service.FizzBuzzStructure{}, -1
-	}
-	max := 0
-	var fbMostUsed service.FizzBuzzStructure
-	for fb, fbCount := range fizzBuzzMaps {
-		if fbCount > max {
-			max = fbCount
-			fbMostUsed = fb
-		}
-	}
-	return fbMostUsed, max
-}
-
-//GET API which returns the parameters corresponding to the most used request
-//as well as the number of hits for this request
-//http://localhost:8000/statistics
-func GetStatisticsFizzBuzz(c echo.Context) error {
-	fbMostUsed, count := getMostUsedRequest()
-	if count == -1 {
-		return c.String(http.StatusOK, "No request has been made yet")
-	}
-	return c.String(http.StatusOK, fmt.Sprintf("Most used request is : limit=%d, multiple1=%d, multiple2=%d, str1=%s, str2=%s\nThe request was asked %d times",
-		fbMostUsed.Limit, fbMostUsed.Multiple1, fbMostUsed.Multiple2, fbMostUsed.Str1, fbMostUsed.Str2, count))
 }
