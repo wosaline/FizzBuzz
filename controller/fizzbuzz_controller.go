@@ -39,8 +39,8 @@ func parseValidParameters(c echo.Context) (int, int, int, string, string, error)
 	if errLimit != nil || errMultiple1 != nil || errMultiple2 != nil {
 		return limit, multiple1, multiple2, str1, str2, fmt.Errorf("params multiple1, multiple2 and limit must be int : you entered limit = %s, multiple1 = %s, multiple2 = %s", c.QueryParam("limit"), c.QueryParam("multiple1"), c.QueryParam("multiple2"))
 	}
-	if dataType != "string" {
-		return limit, multiple1, multiple2, str1, str2, fmt.Errorf("please specify the data type as string : you entered %s", dataType)
+	if dataType != "fizzbuzz" {
+		return limit, multiple1, multiple2, str1, str2, fmt.Errorf("please specify the data type as fizzbuzz : you entered %s", dataType)
 	}
 
 	return limit, multiple1, multiple2, str1, str2, nil
