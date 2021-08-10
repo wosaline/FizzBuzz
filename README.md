@@ -1,5 +1,14 @@
 # FizzBuzz
-FizzBuzz/GoLang
+This FizzBuzz project is a simple REST server that writes all numbers from 1 to a limit and replaces the multiples of two input numbers with two input strings.
+
+## Goals
+This project was for me a way to learn the Go language and how to use Git.  
+It allowed me to discover and include new technologies such as Echo framework for the REST server.  
+I could improve my organisation (issues system for a better organisation for everyday objectives, regular commits for a better follow-up) and my programming process (testing, code organisation).
+
+## Technologies used
+- Go v1.16.7
+- Echo framework v3.3.10
 
 ## Prerequisite
 To compile this project, you need to have :
