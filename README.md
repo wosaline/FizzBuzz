@@ -4,7 +4,7 @@ This FizzBuzz project is a simple REST server that writes all numbers from 1 to 
 ## Goals
 This project was for me a way to learn the Go language and how to use Git.  
 It allowed me to discover and include new technologies such as Echo framework for the REST server.  
-I could improve my organisation (issues system for a better organisation for everyday objectives, regular commits for a better follow-up) and my programming process (testing, code organisation).
+I could improve my organisation (issues system for a better organisation for everyday objectives, regular commits for a better follow-up) and my programming process (testing, code organisation, logs).
 
 ## Technologies used
 - Go v1.16.7
