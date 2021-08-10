@@ -20,7 +20,7 @@ func TestShouldReturnStatusOK_MostUsedRequest(t *testing.T) {
 	c.SetPath("/fizzbuzz/:data")
 	//set data type
 	c.SetParamNames("data")
-	c.SetParamValues("string")
+	c.SetParamValues("fizzbuzz")
 	//set URL query
 	q := req.URL.Query()
 	q.Add("multiple1", "6")
@@ -37,7 +37,7 @@ func TestShouldReturnStatusOK_MostUsedRequest(t *testing.T) {
 	c2.SetPath("/fizzbuzz/:data")
 	//set data type
 	c2.SetParamNames("data")
-	c2.SetParamValues("string")
+	c2.SetParamValues("fizzbuzz")
 	//set URL query
 	q2 := req2.URL.Query()
 	q2.Add("multiple1", "3")

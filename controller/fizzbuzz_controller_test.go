@@ -20,7 +20,7 @@ func TestShouldReturnStatusOK(t *testing.T) {
 	c.SetPath("/fizzbuzz/:data")
 	//set data type
 	c.SetParamNames("data")
-	c.SetParamValues("string")
+	c.SetParamValues("fizzbuzz")
 	//set URL query
 	q := req.URL.Query()
 	q.Add("multiple1", "3")
@@ -48,7 +48,7 @@ func TestShouldReturnStatusBadRequest_NotInt(t *testing.T) {
 	c.SetPath("/fizzbuzz/:data")
 	//set data type
 	c.SetParamNames("data")
-	c.SetParamValues("string")
+	c.SetParamValues("fizzbuzz")
 	//set URL query
 	q := req.URL.Query()
 	q.Add("multiple1", "aa")
@@ -88,7 +88,7 @@ func TestShouldReturnStatusBadRequest_WrongDataType(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, GetFizzBuzz(c)) {
 		assert.Equal(t, http.StatusBadRequest, rec.Code)
-		assert.Equal(t, "{\"error\":\"please specify the data type as string : you entered json\"}\n", rec.Body.String())
+		assert.Equal(t, "{\"error\":\"please specify the data type as fizzbuzz : you entered json\"}\n", rec.Body.String())
 	}
 }
 
@@ -102,7 +102,7 @@ func TestShouldReturnStatusBadRequest_IncorrectParameter(t *testing.T) {
 	c.SetPath("/fizzbuzz/:data")
 	//set data type
 	c.SetParamNames("data")
-	c.SetParamValues("string")
+	c.SetParamValues("fizzbuzz")
 	//set URL query
 	q := req.URL.Query()
 	q.Add("incorrectParam", "1")
@@ -129,7 +129,7 @@ func TestShouldReturnStatusBadRequest_IncorrectNumberOfParameters(t *testing.T) 
 	c.SetPath("/fizzbuzz/:data")
 	//set data type
 	c.SetParamNames("data")
-	c.SetParamValues("string")
+	c.SetParamValues("fizzbuzz")
 	//set URL query
 	q := req.URL.Query()
 	q.Add("multiple2", "2")
@@ -155,7 +155,7 @@ func TestShouldReturnStatusBadRequest_IntInferiorToOne(t *testing.T) {
 	c.SetPath("/fizzbuzz/:data")
 	//set data type
 	c.SetParamNames("data")
-	c.SetParamValues("string")
+	c.SetParamValues("fizzbuzz")
 	//set URL query
 	q := req.URL.Query()
 	q.Add("multiple1", "-1")
