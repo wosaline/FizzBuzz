@@ -22,7 +22,7 @@ go run main.go
 `FizzBuzz` has two possible routes
 <br>
 
-### **/fizzbuzz/string?fizzbuzz**
+### **/fizzbuzz/fizzbuzz**
 ![](https://img.shields.io/badge/Request-GET-green.svg?style=flat)
 ```http
 http://localhost:8000/fizzbuzz/fizzbuzz?multiple1=<multiple1>&multiple2=<multiple2>&limit=<limit>&str1=<str1>&str2=<str2>
@@ -55,7 +55,7 @@ http://localhost:8000/fizzbuzz/fizzbuzz?multiple1=3&multiple2=5&limit=50&str1=fi
   
 1. Multiples or limit inferior to 1
 ```http
-http//localhost:8000/fizzbuzz/fizzbuzz?multiple1=-1&multiple2=5&limit=50&str1=fizz&str2=buzz
+http://localhost:8000/fizzbuzz/fizzbuzz?multiple1=-1&multiple2=5&limit=50&str1=fizz&str2=buzz
 ```
 ```json
 {"error":"limit and multiples can't be inferior to 1 : limit = 50, multiple1 = -1, multiple2 = 5"}
