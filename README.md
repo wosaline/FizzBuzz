@@ -25,7 +25,7 @@ go run main.go
 ### **/fizzbuzz/string?fizzbuzz**
 ![](https://img.shields.io/badge/Request-GET-green.svg?style=flat)
 ```http
-http://127.0.0.1:8000/fizzbuzz/string?multiple1=<multiple1>&multiple2=<multiple2>&limit=<limit>&str1=<str1>&str2=<str2>
+http://localhost:8000/fizzbuzz/string?multiple1=<multiple1>&multiple2=<multiple2>&limit=<limit>&str1=<str1>&str2=<str2>
 ```
 
 | Field | Description
@@ -41,7 +41,7 @@ http://127.0.0.1:8000/fizzbuzz/string?multiple1=<multiple1>&multiple2=<multiple2
 - **200 OK**
 
 ```http
-http://127.0.0.1:8000/fizzbuzz/string?multiple1=3&multiple2=5&limit=50&str1=fizz&str2=buzz
+http://localhost:8000/fizzbuzz/string?multiple1=3&multiple2=5&limit=50&str1=fizz&str2=buzz
 ```
 ```string
 1,2,fizz,4,buzz,fizz,7,8,fizz,buzz,11,fizz,13,14,fizzbuzz,16,17,fizz,19,buzz,fizz,22,23,fizz,buzz,26,fizz,28,29,fizzbuzz,31,32,fizz,34,buzz,fizz,37,38,fizz,buzz,41,fizz,43,44,fizzbuzz,46,47,fizz,49,buzz
@@ -55,7 +55,7 @@ http://127.0.0.1:8000/fizzbuzz/string?multiple1=3&multiple2=5&limit=50&str1=fizz
   
 1. Multiples or limit inferior to 1
 ```http
-http//127.0.0.1:8000/fizzbuzz/string?multiple1=-1&multiple2=5&limit=50&str1=fizz&str2=buzz
+http//localhost:8000/fizzbuzz/string?multiple1=-1&multiple2=5&limit=50&str1=fizz&str2=buzz
 ```
 ```json
 {"error":"limit and multiples can't be inferior to 1 : limit = 50, multiple1 = -1, multiple2 = 5"}
@@ -64,7 +64,7 @@ http//127.0.0.1:8000/fizzbuzz/string?multiple1=-1&multiple2=5&limit=50&str1=fizz
 
 2. At least one wrong parameter name
 ```http
-http://127.0.0.1:8000/fizzbuzz/string?notaparameter=3&multiple2=5&limit=50&str1=fizz&str2=buzz
+http://localhost:8000/fizzbuzz/string?notaparameter=3&multiple2=5&limit=50&str1=fizz&str2=buzz
 ```
 ```json
 {"error":"parameters expected are : [limit multiple1 multiple2 str1 str2]"}
@@ -73,7 +73,7 @@ http://127.0.0.1:8000/fizzbuzz/string?notaparameter=3&multiple2=5&limit=50&str1=
 
 3. Wrong data type
 ```http
-http://127.0.0.1:8000/fizzbuzz/json?multiple1=3&multiple2=5&limit=50&str1=fizz&str2=buzz
+http://localhost:8000/fizzbuzz/json?multiple1=3&multiple2=5&limit=50&str1=fizz&str2=buzz
 ```
 ```json
 {"error":"please specify the data type as string : you entered json"}
@@ -82,7 +82,7 @@ http://127.0.0.1:8000/fizzbuzz/json?multiple1=3&multiple2=5&limit=50&str1=fizz&s
 
 4. At least one parameter missing
 ```http
-http://127.0.0.1:8000/fizzbuzz/string?multiple2=5&limit=50&str1=fizz&str2=buzz
+http://localhost:8000/fizzbuzz/string?multiple2=5&limit=50&str1=fizz&str2=buzz
 ```
 ```json
 {"error":"5 parameters expected : [limit multiple1 multiple2 str1 str2]"}
@@ -91,7 +91,7 @@ http://127.0.0.1:8000/fizzbuzz/string?multiple2=5&limit=50&str1=fizz&str2=buzz
 
 5. Multiple or limit is not an int
 ```http
-http://127.0.0.1:8000/fizzbuzz/string?multiple1=aa&multiple2=5&limit=50&str1=fizz&str2=buzz
+http://localhost:8000/fizzbuzz/string?multiple1=aa&multiple2=5&limit=50&str1=fizz&str2=buzz
 ```
 ```json
 {"error":"params multiple1, multiple2 and limit must be int : you entered limit = 50, multiple1 = aa, multiple2 = 5"}
@@ -101,7 +101,7 @@ http://127.0.0.1:8000/fizzbuzz/string?multiple1=aa&multiple2=5&limit=50&str1=fiz
 ### **/statistics**
 ![](https://img.shields.io/badge/Request-GET-green.svg?style=flat)
 ```http
-http://127.0.0.1:8000/statistics
+http://localhost:8000/statistics
 ```
 
 #### Results
